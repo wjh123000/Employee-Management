@@ -10,6 +10,9 @@ public:
 	//显示菜单
 	void Show_Menu();
 
+	//退出系统
+	void ExitSystem();
+
 	~WorkerManager();
 
 };
