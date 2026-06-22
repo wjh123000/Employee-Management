@@ -427,3 +427,31 @@ void WorkerManager::Sort_Emp() {
 	
 	return;
 }
+
+void WorkerManager::Clean_File() {
+	cout << "确认清空? " << endl;
+	cout << "1.确认" << endl;
+	cout << "2.取消" << endl;
+	int select = 0;
+	cin >> select;
+	if (select == 1) {
+		//如果存在文件，清空文件
+		ofstream ofs(FILENAME, ios::trunc);
+		ofs.close();
+		if (this->m_EmpArray != nullptr) {
+			for (int i = 0; i < this->m_EmpNum; i++) {
+				if (this->m_EmpArray[i] != nullptr) {
+					delete this->m_EmpArray[i];
+				}
+			}
+			delete[] this->m_EmpArray;
+			this->m_EmpArray = nullptr;
+		}
+		this->m_EmpNum = 0;
+		this->m_FileIsEmpty = true;
+		cout << "清空成功!" << endl;
+	}
+	system("pause");
+	system("cls");
+	return;
+}

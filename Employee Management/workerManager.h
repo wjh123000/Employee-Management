@@ -51,6 +51,9 @@ public:
 	//еепР
 	void Sort_Emp();
 
+	//гЕ©унд╪Ч
+	void Clean_File();
+
 	~WorkerManager();
 
 	bool m_FileIsEmpty;

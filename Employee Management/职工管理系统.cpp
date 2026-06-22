@@ -57,6 +57,7 @@ int main() {
 			wm.Sort_Emp();
 			break;
 		case 7://清空所有文档
+			wm.Clean_File();
 			break;
 		default:
 			system("cls");//清屏
