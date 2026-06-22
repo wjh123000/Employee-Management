@@ -24,15 +24,23 @@ public:
 	//记录职工人数
 	int m_EmpNum; 
 
-	//职工数组指针
-	Worker** m_EmpArray;
-
 	//添加职工
 	void Add_Emp();
 
 	//保存文件 
 	void save();
 
+	//初始化员工
+	void init_Emp();
+
+	//显示职工
+	void Show_Emp();
+
 	~WorkerManager();
 
+	bool m_FileIsEmpty;
+	//职工数组指针
+	Worker** m_EmpArray;
+	//统计文件中的人数
+	int get_EmpNum();
 };

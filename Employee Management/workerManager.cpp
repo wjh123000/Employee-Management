@@ -1,8 +1,42 @@
 #include "workerManager.h"
 
 WorkerManager::WorkerManager(){
-	this->m_EmpNum = 0;
-	this->m_EmpArray = nullptr;
+	//1.文件不存在
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in);
+	if (!ifs.is_open()) {
+		//cout << "文件不存在!" << endl;
+		this->m_EmpNum = 0;
+		this->m_EmpArray = nullptr;
+		this->m_FileIsEmpty = true;
+		ifs.close();
+		return;
+	}
+	//2.文件存在但内容为空
+	char ch;
+	ifs >> ch;
+	if (ifs.eof()) {
+		//cout << "文件为空!" << endl;
+		this->m_EmpNum = 0;
+		this->m_EmpArray = nullptr;
+		this->m_FileIsEmpty = true;
+		ifs.close();
+		return;
+	}
+	//3.文件存在且内容不为空
+	this->m_FileIsEmpty = false;
+	int num = this->get_EmpNum();
+	//cout << "职工人数: " << num << endl;
+	this->m_EmpNum = num;
+	this->m_EmpArray = new Worker * [this->m_EmpNum];
+	this->init_Emp();//从文件中读取数据，初始化员工信息
+
+	//for (int i = 0;i < this->m_EmpNum;i++) {
+	//	cout << "职工编号: " << this->m_EmpArray[i]->m_Id
+	//		<< "\t职工姓名: " << this->m_EmpArray[i]->m_Name
+	//		<< "\t岗位编号: " << this->m_EmpArray[i]->m_DeptId << endl;
+	//}
+	
 }
 
 WorkerManager::~WorkerManager(){
@@ -102,6 +136,7 @@ void WorkerManager::Add_Emp() {
 		this->m_EmpNum = newSize;
 		//提示添加成功
 		cout << "成功添加" << addNum << "名新职工!" << endl;
+		this->m_FileIsEmpty = false;
 
 		//保存文件
 		this->save();
@@ -127,3 +162,48 @@ void WorkerManager::save() {
 	}
 	ofs.close();
 }
+
+
+int WorkerManager::get_EmpNum() {
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in); //以读的方式打开文件
+
+	int id;
+	string name;
+	int deptId;
+
+	int num = 0;
+	while (ifs >> id && ifs >> name && ifs >> deptId) {
+		num++;
+	}
+	ifs.close();
+	return num;
+}
+
+void WorkerManager::init_Emp() {
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in); //以读的方式打开文件
+
+	int id;
+	string name;
+	int deptId;
+
+	int index = 0;
+	while (ifs >> id && ifs >> name && ifs >> deptId) {
+		Worker* worker = nullptr;
+		if (deptId == 1) {
+			worker = new Employee(id, name, deptId);
+		}
+		else if (deptId == 2) {
+			worker = new Manager(id, name, deptId);
+		}
+		else if (deptId == 3) {
+			worker = new Boss(id, name, deptId);
+		}
+		this->m_EmpArray[index] = worker;
+		index++;
+	}
+
+	ifs.close();
+}
+
