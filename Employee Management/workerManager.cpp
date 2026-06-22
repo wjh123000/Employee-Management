@@ -6,6 +6,16 @@ WorkerManager::WorkerManager(){
 }
 
 WorkerManager::~WorkerManager(){
+	if (this->m_EmpArray != nullptr) {
+		for (int i = 0; i < this->m_EmpNum; i++) {
+			if (this->m_EmpArray[i] != nullptr) {
+				delete this->m_EmpArray[i];
+			}
+		}
+		delete[] this->m_EmpArray;
+		this->m_EmpArray = nullptr;
+	}
+
 }
 
 void WorkerManager::Show_Menu() {
@@ -93,13 +103,27 @@ void WorkerManager::Add_Emp() {
 		//提示添加成功
 		cout << "成功添加" << addNum << "名新职工!" << endl;
 
-		//按任意键，清屏回到上级目录
-		system("pause");
-		system("cls");
+		//保存文件
+		this->save();
 
 	}
 	else {
 		cout << "输入数据有误" << endl;
 	}
+	//按任意键，清屏回到上级目录
+	system("pause");
+	system("cls");
 
+}
+
+void WorkerManager::save() {
+	ofstream ofs;
+	ofs.open(FILENAME, ios::out); //以写的方式打开文件
+	//将职工人数写入文件
+	for (int i = 0;i < this->m_EmpNum;i++) {
+		ofs << this->m_EmpArray[i]->m_Id << " "
+			<< this->m_EmpArray[i]->m_Name << " "
+			<< this->m_EmpArray[i]->m_DeptId << endl;
+	}
+	ofs.close();
 }
