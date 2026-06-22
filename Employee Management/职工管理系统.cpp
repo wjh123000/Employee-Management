@@ -51,6 +51,7 @@ int main() {
 			wm.Mod_Emp();
 			break;
 		case 5://查找职工信息
+			wm.Find_Emp();
 			break;
 		case 6://按照编号排序
 			break;
