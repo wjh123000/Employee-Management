@@ -42,6 +42,9 @@ public:
 	//判断职工是否存在
 	int IsExist(int id);
 
+	//修改职工
+	void Mod_Emp();
+
 	~WorkerManager();
 
 	bool m_FileIsEmpty;

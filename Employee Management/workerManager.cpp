@@ -266,3 +266,61 @@ void WorkerManager::Del_Emp() {
 	system("pause");
 	system("cls");
 }
+
+
+void WorkerManager::Mod_Emp() {
+	if (this->m_FileIsEmpty) {
+		cout << "文件不存在或记录为空!" << endl;
+	}
+	else {
+		cout << "请输入要修改的职工编号: " << endl;
+		int id;
+		cin >> id;
+		int ret = this->IsExist(id);
+		if (ret != -1) {
+			delete this->m_EmpArray[ret];
+			int newId;
+			string newName;
+			int dSelect;
+
+			cout << "查到： " << id << "号职工，请输入新职工号" << endl;
+			cin >> newId;
+			cout << "请输入新职工姓名: " << endl;
+			cin >> newName;
+			cout << "请输入新职工岗位: " << endl;
+			cout << "1.员工" << endl;
+			cout << "2.经理" << endl;
+			cout << "3.老板" << endl;
+			cin >> dSelect;
+
+			Worker* worker = nullptr;
+			switch (dSelect) {
+			case 1:
+				worker = new Employee(newId, newName, 1);
+				break;
+			case 2:
+				worker = new Manager(newId, newName, 2);
+				break;
+			case 3:
+				worker = new Boss(newId, newName, 3);
+				break;
+			default:
+				break;
+			}
+
+			//更新数组中的职工指针
+			this->m_EmpArray[ret] = worker;
+
+			cout << "修改成功!" << endl;
+
+			this->save();
+
+		}
+		else {
+			cout << "修改失败，未找到该职工!" << endl;
+		}
+
+	}
+	system("pause");
+	system("cls");
+}
