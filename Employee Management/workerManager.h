@@ -48,6 +48,9 @@ public:
 	//≤È’“÷∞π§
 	void Find_Emp();
 
+	//≈≈–Ú
+	void Sort_Emp();
+
 	~WorkerManager();
 
 	bool m_FileIsEmpty;
