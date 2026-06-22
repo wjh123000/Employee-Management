@@ -1,8 +1,11 @@
 #include<iostream>
 using namespace std;
 #include "workerManager.h"
+
 #include "worker.h"
 #include "employee.h"
+#include "boss.h"
+#include "manager.h"
 
 
 int main() {
@@ -10,6 +13,17 @@ int main() {
 	Worker* worker = nullptr;
 	worker = new Employee(1, "张三", 1);
 	worker->showInfo();
+	delete worker;
+
+	Worker* worker2 = nullptr;
+	worker2 = new Boss(2, "李四", 2);
+	worker2->showInfo();
+	delete worker2;
+
+	Worker* worker3 = nullptr;
+	worker3 = new Manager(3, "王五", 3);
+	worker3->showInfo();
+	delete worker3;
 
 	//创建职工管理系统对象
 	//WorkerManager wm;
