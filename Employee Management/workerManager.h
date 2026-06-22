@@ -36,6 +36,12 @@ public:
 	//显示职工
 	void Show_Emp();
 
+	//删除职工
+	void Del_Emp();
+
+	//判断职工是否存在
+	int IsExist(int id);
+
 	~WorkerManager();
 
 	bool m_FileIsEmpty;

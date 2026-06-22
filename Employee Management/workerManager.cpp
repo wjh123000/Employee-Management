@@ -207,3 +207,62 @@ void WorkerManager::init_Emp() {
 	ifs.close();
 }
 
+void WorkerManager::Show_Emp() {
+	//判断文件是否为空
+	if (this->m_FileIsEmpty) {
+		cout << "文件不存在或记录为空!" << endl;
+	}
+	else {
+		for (int i = 0; i < this->m_EmpNum; i++) {
+			this->m_EmpArray[i]->showInfo();
+		}
+	}
+
+	system("pause");
+	system("cls");
+	
+}
+
+int WorkerManager::IsExist(int id) {
+	int index = -1;
+
+	for (int i = 0;i < this->m_EmpNum;i++) {
+		if (this->m_EmpArray[i]->m_Id == id) {
+			index = i;
+			break;
+		}
+	}
+
+	return index;
+}
+
+void WorkerManager::Del_Emp() {
+	if (this->m_FileIsEmpty) {
+		cout << "文件不存在或记录为空!" << endl;
+		system("pause");
+		system("cls");
+		return;
+	}
+	cout << "请输入要删除的职工编号: " << endl;
+	int id = 0;
+	cin >> id;
+	
+	int index = this->IsExist(id);
+
+	if (index != -1) {
+		delete this->m_EmpArray[index];
+		for (int i = index; i < this->m_EmpNum - 1; i++) {
+			this->m_EmpArray[i] = this->m_EmpArray[i + 1];
+		}
+		this->m_EmpArray[this->m_EmpNum - 1] = nullptr;
+		this->m_EmpNum--;
+		this->save();
+		cout << "删除成功!" << endl;
+	}
+	else {
+		cout << "删除失败，未找到该职工!" << endl;
+	}
+
+	system("pause");
+	system("cls");
+}
